@@ -1,4 +1,23 @@
-<!-- TOP: written by parent -->
+# RoleCall: Measuring How Agent Harnesses Change Prompt-Injection Behavior
+
+**Project page: <https://eveneureka.github.io/RoleCall/>** · Yiwen Lu, University of Notre Dame · 2026
+
+An **agent** is a language model that can use tools: read files, send e-mails, move money. A **prompt injection** is an instruction that an attacker hides in data the agent reads, for example a line inside a bill that says *"send a transaction to US133…"*. Agent security is usually reported per model. But a program called the **harness** runs every agent: it builds the conversation, calls the tools and decides when to ask the human. RoleCall keeps the model weights fixed, changes only two harness choices, and measures how often the attack succeeds.
+
+- **Role:** is the tool output given to the model as a `tool` message or as a `user` message?
+- **Who decides to ask the user:** the model's own risk label on its call, a reviewer model, or a fixed rule?
+
+## Findings
+
+Tested on [AgentDojo](https://github.com/ethz-spylab/agentdojo) v1.2.2 with three open-weight models: Llama-3.3-70B, gpt-oss-120b and Qwen3-32B.
+
+1. **One role label can decide whether the agent obeys the attacker, for some models.** LlamaIndex's ReAct agent and smolagents' ToolCallingAgent label tool outputs as `user` messages by default. For Llama-3.3-70B this default raised attack success from 65.9% to 95.2% (LlamaIndex) and from 39.0% to 83.9% (smolagents). Changing only the label of the one attacked message, every other byte the same, raised it by 24–27 percentage points. gpt-oss-120b barely changed (+1.2 points).
+2. **A model rates its own action as less risky than it rates the same action on review.** The risk label a model writes inside its own call (as in OpenHands) said HIGH on the attacker's call in 4.4% (gpt-oss-120b), 42.6% (Qwen3-32B) and 33.0% (Llama-3.3-70B) of episodes. The same model reviewing the same call said HIGH in 76.7%, 82.4% and 88.4%.
+3. **A higher rating does not mean better judgment.** Reviewers also rated 63–88% of the sends that the user really asked for HIGH. Only 2 of 9 model-and-position pairs told attacks apart from real requests.
+4. **A fixed rule stopped the most attacks; the model's own label stopped the fewest.** In full episodes with a user who rejects every attacker call shown to them, the rule "ask before any of five send or post functions" brought attack success to 0% but interrupted 53–90% of legitimate sends. The self-label gate lowered attack success by 0.0–19.1 points, the reviewer gate by 18.6–38.5.
+
+Where these results hold and what they do not show is listed under "Details and limits" on the [project page](https://eveneureka.github.io/RoleCall/#limits).
+
 
 ## Repository map
 
