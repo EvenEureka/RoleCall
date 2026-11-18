@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/
+.venv/
+venv/
+logs/
+# outputs of the experiment scripts (full transcripts, several GB)
+results_*/
+experiments/role/plans/
+*.jsonl
+*.jsonl.gz

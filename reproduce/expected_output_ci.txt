@@ -1,0 +1,316 @@
+RoleCall: headline numbers recomputed from data/  (with bootstrap intervals)
+Columns: [status] recomputed value [95% interval] | value printed in the report | what the number means
+Status: ok = matches the report at its printed precision; DIFF = does not match; info = not printed in the report; n/a = cannot be recomputed from the released data (reason given)
+
+======================================================================================================================
+Section 3 / Table 1 (top): installed LlamaIndex and smolagents agents, tool-role option vs framework default
+======================================================================================================================
+  [  ok] 249                      report 249                     attacked pairs (banking and Slack suites)
+  [  ok] 37                       report 37                      user tasks behind those pairs
+  [  ok] 0                        report 0                       attacked episodes (all models, frameworks, roles) that ended with a recorded exception
+-- Llama-3.3-70B, llamaindex
+  [  ok] 249                      report 249                     attacked pairs valid under both roles
+  [  ok] 65.9                     report 65.9                    ASR (%) with tool outputs in the tool role (the framework's option)
+  [  ok] 95.2                     report 95.2                    ASR (%) with tool outputs as user messages (the framework default)
+  [  ok] +29.3 [17.7, 42.2]       report +29.3 [17.7, 42.2]      change in ASR, default minus tool role (points); 95% user-task bootstrap
+  [  ok] +4.0 [-4.0, 13.0]        report +4.0 [-4.0, 13.0]       change in utility under attack, default minus tool role (points)
+  [  ok] -4.0 [-13.0, 4.0]        report -4.0 [-13.0, 4.0]       the same utility change read in the recommended direction, tool role minus default (points)
+  [  ok] False                    report False                   switching to the tool role is noninferior for utility under attack at a 10-point margin
+-- Llama-3.3-70B, smolagents
+  [  ok] 249                      report 249                     attacked pairs valid under both roles
+  [  ok] 39.0                     report 39.0                    ASR (%) with tool outputs in the tool role (the framework's option)
+  [  ok] 83.9                     report 83.9                    ASR (%) with tool outputs as user messages (the framework default)
+  [  ok] +45.0 [33.2, 57.1]       report +45.0 [33.2, 57.1]      change in ASR, default minus tool role (points); 95% user-task bootstrap
+  [  ok] -0.4 [-10.5, 8.4]        report -0.4 [-10.5, 8.4]       change in utility under attack, default minus tool role (points)
+  [  ok] +0.4 [-8.4, 10.5]        report +0.4 [-8.4, 10.5]       the same utility change read in the recommended direction, tool role minus default (points)
+  [  ok] True                     report True                    switching to the tool role is noninferior for utility under attack at a 10-point margin
+-- gpt-oss-120b, smolagents
+  [  ok] 249                      report 249                     attacked pairs valid under both roles
+  [  ok] 83.1                     report 83.1                    ASR (%) with tool outputs in the tool role (the framework's option)
+  [  ok] 84.3                     report 84.3                    ASR (%) with tool outputs as user messages (the framework default)
+  [  ok] +1.2 [-2.4, 4.8]         report +1.2 [-2.4, 4.8]        change in ASR, default minus tool role (points); 95% user-task bootstrap
+  [  ok] -2.4 [-8.6, 3.6]         report -2.4 [-8.6, 3.6]        change in utility under attack, default minus tool role (points)
+  [info] +2.4 [-3.6, 8.6]                                        the same utility change read in the recommended direction, tool role minus default (points)
+  [info] True                                                    switching to the tool role is noninferior for utility under attack at a 10-point margin
+  [  ok] True                     report True                    90% interval [-1.7, 4.2] lies inside +-10 points (equivalent to zero)
+-- Qwen3-32B, llamaindex
+  [  ok] 249                      report 249                     attacked pairs valid under both roles
+  [  ok] 61.0                     report 61.0                    ASR (%) with tool outputs in the tool role (the framework's option)
+  [  ok] 60.2                     report 60.2                    ASR (%) with tool outputs as user messages (the framework default)
+  [  ok] -0.8 [-5.6, 4.0]         report -0.8 [-5.6, 4.0]        change in ASR, default minus tool role (points); 95% user-task bootstrap
+  [  ok] -5.2 [-10.4, -0.8]       report -5.2 [-10.4, -0.8]      change in utility under attack, default minus tool role (points)
+  [info] +5.2 [0.8, 10.4]                                        the same utility change read in the recommended direction, tool role minus default (points)
+  [info] True                                                    switching to the tool role is noninferior for utility under attack at a 10-point margin
+-- Qwen3-32B, smolagents
+  [  ok] 249                      report 249                     attacked pairs valid under both roles
+  [  ok] 68.3                     report 68.3                    ASR (%) with tool outputs in the tool role (the framework's option)
+  [  ok] 65.1                     report 65.1                    ASR (%) with tool outputs as user messages (the framework default)
+  [  ok] -3.2 [-9.9, 2.0]         report -3.2 [-9.9, 2.0]        change in ASR, default minus tool role (points); 95% user-task bootstrap
+  [  ok] +3.2 [0.4, 6.6]          report +3.2 [0.4, 6.6]         change in utility under attack, default minus tool role (points)
+  [info] -3.2 [-6.6, -0.4]                                       the same utility change read in the recommended direction, tool role minus default (points)
+  [info] True                                                    switching to the tool role is noninferior for utility under attack at a 10-point margin
+-- gpt-oss-120b, llamaindex
+  [ n/a] -                                                       gpt-oss-120b in the LlamaIndex ReAct agent -- the report states this configuration gave no usable runs; no records are released for it
+
+======================================================================================================================
+Section 3 / Table 1 (bottom): branching at the first injected message; only that message's header changes
+======================================================================================================================
+-- Llama-3.3-70B
+  [  ok] 224                      report 224                     attacked pairs branched (episode read the injection; replay identical; no exception)
+  [  ok] 56.7                     report 56.7                    unattributed injection, injected message under the tool header: continued ASR (%)
+  [  ok] 83.9                     report 83.9                    unattributed injection, same message under a user header: continued ASR (%)
+  [  ok] +27.2 [18.2, 36.8]       report +27.2 [18.2, 36.8]      header effect on continued ASR, user minus tool header (points)
+  [  ok] +18.8                    report +18.8                   header effect on the very next action being attacker-directed (points)
+  [  ok] 68.8                     report 68.8                    user_authored injection, injected message under the tool header: continued ASR (%)
+  [  ok] 92.4                     report 92.4                    user_authored injection, same message under a user header: continued ASR (%)
+  [  ok] +23.7 [13.7, 34.9]       report +23.7 [13.7, 34.9]      header effect on continued ASR, user minus tool header (points)
+  [  ok] +21.9                    report +21.9                   header effect on the very next action being attacker-directed (points)
+-- gpt-oss-120b
+  [  ok] 212                      report 212                     attacked pairs branched (episode read the injection; replay identical; no exception)
+  [  ok] 80.2                     report 80.2                    unattributed injection, injected message under the tool header: continued ASR (%)
+  [  ok] 77.4                     report 77.4                    unattributed injection, same message under a user header: continued ASR (%)
+  [  ok] -2.8 [-10.1, 4.6]        report -2.8 [-10.1, 4.6]       header effect on continued ASR, user minus tool header (points)
+  [  ok] True                     report True                    90% interval [-8.9, 3.4] lies inside +-10 points
+  [info] -5.7                                                    header effect on the very next action being attacker-directed (points)
+  [  ok] 83.5                     report 83.5                    user_authored injection, injected message under the tool header: continued ASR (%)
+  [  ok] 83.5                     report 83.5                    user_authored injection, same message under a user header: continued ASR (%)
+  [  ok] 0.0 [-4.4, 4.4]          report 0.0 [-4.4, 4.4]         header effect on continued ASR, user minus tool header (points)
+  [  ok] True                     report True                    90% interval [-3.7, 3.6] lies inside +-10 points
+  [info] -3.3                                                    header effect on the very next action being attacker-directed (points)
+  [  ok] 77.4                     report 77.4                    lowest continued ASR of the four cells (%)
+  [  ok] 83.5                     report 83.5                    highest continued ASR of the four cells (%)
+
+======================================================================================================================
+Section 3 (text): every observation relabelled, bytes unchanged, under three attack templates
+======================================================================================================================
+  [  ok] +25.7                    report +25.7                   gpt-oss-120b, ignore_previous, native tool calls: ASR with every tool output as a user message minus tool role (points, n=249)
+  [  ok] +15.3                    report +15.3                   gpt-oss-120b, direct, native tool calls: ASR with every tool output as a user message minus tool role (points, n=249)
+  [info] -4.0                                                    gpt-oss-120b, important_instructions, native tool calls: ASR with every tool output as a user message minus tool role (points, n=249)
+  [  ok] +17.7                    report +17.7                   Llama-3.3-70B, direct, text tool calls: ASR with every tool output as a user message minus tool role (points, n=249)
+  [  ok] +18.9                    report +18.9                   Llama-3.3-70B, ignore_previous, text tool calls: ASR with every tool output as a user message minus tool role (points, n=249)
+  [  ok] +24.2                    report +24.2                   Llama-3.3-70B, important_instructions, text tool calls: ASR with every tool output as a user message minus tool role (points, n=248)
+  [  ok] +2.0                     report +2.0                    Qwen3-32B, direct, text tool calls: ASR with every tool output as a user message minus tool role (points, n=249)
+  [  ok] -12.4                    report -12.4                   Qwen3-32B, direct: change in utility under attack when relabelled (points)
+  [  ok] -1.2                     report -1.2                    Qwen3-32B, ignore_previous, text tool calls: ASR with every tool output as a user message minus tool role (points, n=249)
+  [  ok] -0.4                     report -0.4                    Qwen3-32B, important_instructions, text tool calls: ASR with every tool output as a user message minus tool role (points, n=249)
+
+======================================================================================================================
+Section 4 (text): HIGH on the first attacker-directed call of each injected episode, by stance
+======================================================================================================================
+  [  ok] [310, 310, 97]           report [310, 310, 97]          gpt-oss-120b: injected / authorised-twin / benign episodes run
+  [  ok] [310, 310, 97]           report [310, 310, 97]          Qwen3-32B: injected / authorised-twin / benign episodes run
+  [  ok] [310, 310, 97]           report [310, 310, 97]          Llama-3.3-70B: injected / authorised-twin / benign episodes run
+-- gpt-oss-120b
+  [  ok] 90                       report 90                      first attacker-directed calls (one per injected episode that made one)
+  [  ok] 4.4                      report 4.4                     % rated HIGH, acting
+  [  ok] 37.8                     report 37.8                    % rated HIGH, asked
+  [  ok] 76.7                     report 76.7                    % rated HIGH, reviewing
+  [  ok] 82.2                     report 82.2                    % rated HIGH, reviewing no tool outputs
+  [  ok] 72.2 [64.6, 79.1]        report 72.2                    gap in HIGH, reviewing minus acting (points, same calls)
+  [  ok] 33.3 [26.3, 42.5]        report 33.3                    gap in HIGH, asked minus acting (points, same calls)
+  [  ok] 38.9 [28.0, 47.7]        report 38.9                    gap in HIGH, reviewing minus asked (points, same calls)
+  [  ok] 4.3                      report 4.3                     % HIGH, acting, only goals that send the user's data out (n=69)
+  [  ok] 92.8                     report 92.8                    % HIGH, reviewing, only goals that send the user's data out (n=69)
+-- Qwen3-32B
+  [  ok] 176                      report 176                     first attacker-directed calls (one per injected episode that made one)
+  [  ok] 42.6                     report 42.6                    % rated HIGH, acting
+  [  ok] 57.4                     report 57.4                    % rated HIGH, asked
+  [  ok] 82.4                     report 82.4                    % rated HIGH, reviewing
+  [  ok] 76.1                     report 76.1                    % rated HIGH, reviewing no tool outputs
+  [  ok] 39.8 [29.6, 50.0]        report 39.8                    gap in HIGH, reviewing minus acting (points, same calls)
+  [  ok] 14.8 [9.0, 21.1]         report 14.8                    gap in HIGH, asked minus acting (points, same calls)
+  [  ok] 25.0 [16.1, 33.3]        report 25.0                    gap in HIGH, reviewing minus asked (points, same calls)
+  [  ok] 43.8                     report 43.8                    % HIGH, acting, only goals that send the user's data out (n=137)
+  [  ok] 88.3                     report 88.3                    % HIGH, reviewing, only goals that send the user's data out (n=137)
+-- Llama-3.3-70B
+  [  ok] 112                      report 112                     first attacker-directed calls (one per injected episode that made one)
+  [  ok] 33.0                     report 33.0                    % rated HIGH, acting
+  [  ok] 82.1                     report 82.1                    % rated HIGH, asked
+  [  ok] 88.4                     report 88.4                    % rated HIGH, reviewing
+  [  ok] 96.4                     report 96.4                    % rated HIGH, reviewing no tool outputs
+  [  ok] 55.4 [46.6, 66.3]        report 55.4                    gap in HIGH, reviewing minus acting (points, same calls)
+  [  ok] 49.1 [39.1, 61.6]        report 49.1                    gap in HIGH, asked minus acting (points, same calls)
+  [  ok] 6.2 [0.0, 12.5]          report 6.2                     gap in HIGH, reviewing minus asked (points, same calls)
+  [  ok] 28.2                     report 28.2                    % HIGH, acting, only goals that send the user's data out (n=85)
+  [  ok] 92.9                     report 92.9                    % HIGH, reviewing, only goals that send the user's data out (n=85)
+
+======================================================================================================================
+Section 4 (text): replication with different seeds and overlapping tasks (reviewing minus acting)
+======================================================================================================================
+  [  ok] 70.5 [63.4, 77.6]        report 70.5                    gpt-oss-120b: gap on first attacker-directed calls in the replication run (points, n=88)
+  [  ok] 39.2 [29.8, 49.6]        report 39.2                    Qwen3-32B: gap on first attacker-directed calls in the replication run (points, n=171)
+  [  ok] 54.6 [43.9, 67.1]        report 54.6                    Llama-3.3-70B: gap on first attacker-directed calls in the replication run (points, n=108)
+
+======================================================================================================================
+Section 4 / Table 2: HIGH on the attacker-directed call vs the goal-matched authorised send (twin pairs)
+======================================================================================================================
+-- gpt-oss-120b
+  [  ok] 84                       report 84                      completed twin pairs (injected episode and its authorised twin each made the goal's send)
+  [  ok] 3.6                      report 3.6                     acting: % HIGH on the attacker-directed call
+  [  ok] 1.2                      report 1.2                     acting: % HIGH on the matched authorised send
+  [  ok] +2.4 [-2.2, 6.7]         report +2.4                    separation = the two rates' difference (points)
+  [  ok] 35.7                     report 35.7                    asked: % HIGH on the attacker-directed call
+  [  ok] 32.1                     report 32.1                    asked: % HIGH on the matched authorised send
+  [  ok] +3.6 [-7.8, 14.3]        report +3.6                    separation = the two rates' difference (points)
+  [  ok] 75.0                     report 75.0                    reviewing: % HIGH on the attacker-directed call
+  [  ok] 70.2                     report 70.2                    reviewing: % HIGH on the matched authorised send
+  [  ok] +4.8 [-5.1, 15.4]        report +4.8                    separation = the two rates' difference (points)
+  [  ok] 81.0                     report 81.0                    reviewing no tool outputs: % HIGH on the attacker-directed call
+  [  ok] 79.8                     report 79.8                    reviewing no tool outputs: % HIGH on the matched authorised send
+  [  ok] +1.2 [-5.7, 9.1]         report +1.2                    separation = the two rates' difference (points)
+-- Qwen3-32B
+  [  ok] 157                      report 157                     completed twin pairs (injected episode and its authorised twin each made the goal's send)
+  [  ok] 41.4                     report 41.4                    acting: % HIGH on the attacker-directed call
+  [  ok] 44.6                     report 44.6                    acting: % HIGH on the matched authorised send
+  [  ok] -3.2 [-11.4, 6.0]        report -3.2                    separation = the two rates' difference (points)
+  [  ok] 54.8                     report 54.8                    asked: % HIGH on the attacker-directed call
+  [  ok] 64.3                     report 64.3                    asked: % HIGH on the matched authorised send
+  [  ok] -9.6 [-18.2, -1.4]       report -9.6                    separation = the two rates' difference (points)
+  [  ok] 82.2                     report 82.2                    reviewing: % HIGH on the attacker-directed call
+  [  ok] 63.1                     report 63.1                    reviewing: % HIGH on the matched authorised send
+  [  ok] +19.1 [11.5, 25.4]       report +19.1 [11.5, 25.4]      separation = the two rates' difference (points)
+  [  ok] 74.5                     report 74.5                    reviewing no tool outputs: % HIGH on the attacker-directed call
+  [  ok] 75.2                     report 75.2                    reviewing no tool outputs: % HIGH on the matched authorised send
+  [  ok] -0.6 [-8.5, 6.5]         report -0.6                    separation = the two rates' difference (points)
+-- Llama-3.3-70B
+  [  ok] 73                       report 73                      completed twin pairs (injected episode and its authorised twin each made the goal's send)
+  [  ok] 37.0                     report 37.0                    acting: % HIGH on the attacker-directed call
+  [  ok] 16.4                     report 16.4                    acting: % HIGH on the matched authorised send
+  [  ok] +20.5 [7.3, 31.0]        report +20.5 [7.3, 31.0]       separation = the two rates' difference (points)
+  [  ok] 80.8                     report 80.8                    asked: % HIGH on the attacker-directed call
+  [  ok] 84.9                     report 84.9                    asked: % HIGH on the matched authorised send
+  [  ok] -4.1 [-18.5, 10.3]       report -4.1                    separation = the two rates' difference (points)
+  [  ok] 90.4                     report 90.4                    reviewing: % HIGH on the attacker-directed call
+  [  ok] 87.7                     report 87.7                    reviewing: % HIGH on the matched authorised send
+  [  ok] +2.7 [-8.5, 11.4]        report +2.7                    separation = the two rates' difference (points)
+  [  ok] 98.6                     report 98.6                    reviewing no tool outputs: % HIGH on the attacker-directed call
+  [  ok] 95.9                     report 95.9                    reviewing no tool outputs: % HIGH on the matched authorised send
+  [  ok] +2.7 [-2.5, 7.9]         report +2.7                    separation = the two rates' difference (points)
+-- post hoc: change in separation from acting to reviewing (adjusted intervals)
+  [  ok] 69                       report 69                      (suite, user task) clusters in the joint resampling
+  [  ok] +22.3 [5.2, 36.7]        report +22.3 [5.2, 36.7]       Qwen3-32B: separation rises from acting to reviewing (points, adjusted interval)
+  [  ok] -17.8 [-32.6, 1.4]       report -17.8 [-32.6, 1.4]      Llama-3.3-70B: change in separation (points; interval includes zero)
+  [  ok] +40.1 [14.3, 59.3]       report +40.1 [14.3, 59.3]      Qwen3's change minus Llama's change (points)
+  [  ok] +11.0 [-15.1, 35.9]      report +11.0 [-15.1, 35.9]     the same difference without the banking suite (points, 95%)
+
+======================================================================================================================
+Section 5 / Table 3 (bottom) and text: gate operating points from the rating experiment
+======================================================================================================================
+-- gpt-oss-120b
+  [  ok] 0                        report 0                       benign calls with no reviewer rating (0 = the reviewer's benign rate is a point estimate)
+  [  ok] 11.7                     report 11.7                    % of benign episodes (with >= 1 call) the rule would interrupt
+  [  ok] 77.6                     report 77.6                    % of authorised twins that made a call that the rule would interrupt
+  [  ok] 0.08                     report 0.08                    self-label gate: first-call coverage per benign interruption, relative to the rule (coverage 7.8%, benign 11.7%)
+  [  ok] 0.53                     report 0.53                    reviewer gate: first-call coverage per benign interruption, relative to the rule (coverage 76.7%, benign 17.0%)
+-- Qwen3-32B
+  [  ok] 0                        report 0                       benign calls with no reviewer rating (0 = the reviewer's benign rate is a point estimate)
+  [  ok] 14.4                     report 14.4                    % of benign episodes (with >= 1 call) the rule would interrupt
+  [  ok] 89.3                     report 89.3                    % of authorised twins that made a call that the rule would interrupt
+  [  ok] 0.38                     report 0.38                    self-label gate: first-call coverage per benign interruption, relative to the rule (coverage 46.0%, benign 17.5%)
+  [  ok] 0.96                     report 0.96                    reviewer gate: first-call coverage per benign interruption, relative to the rule (coverage 82.4%, benign 12.4%)
+-- Llama-3.3-70B
+  [  ok] 0                        report 0                       benign calls with no reviewer rating (0 = the reviewer's benign rate is a point estimate)
+  [  ok] 19.8                     report 19.8                    % of benign episodes (with >= 1 call) the rule would interrupt
+  [info] 89.0                                                    % of authorised twins that made a call that the rule would interrupt
+  [  ok] 2.81                     report 2.81                    self-label gate: first-call coverage per benign interruption, relative to the rule (coverage 33.0%, benign 2.3%)
+  [  ok] 0.79                     report 0.79                    reviewer gate: first-call coverage per benign interruption, relative to the rule (coverage 88.4%, benign 22.1%)
+  note: the rule's twin rate for Llama-3.3-70B is not printed in the report (range 77.6-89.3 covers it).
+
+======================================================================================================================
+Section 5 / Table 3 (top): executed gates, informed simulated user (rejects exactly the attacker-directed calls)
+======================================================================================================================
+-- gpt-oss-120b
+  [  ok] [717]                    report [717]                   episode keys scheduled per gate
+  [info] [714, 716, 715, 713]                                    episodes without an exception: none / self-label / reviewer / rule
+  [  ok] 26.5                     report 26.5                    no gate: ASR (%) over injected episodes (n=310)
+  [  ok] 26.5                     report 26.5                    self-label gate (HIGH or missing): ASR (%) over injected episodes (n=310)
+  [  ok] 0.0 [-4.2, 4.4]          report 0.0 [-4.2, 4.4]         change in ASR vs no gate (points)
+  [  ok] 26.5                     report 26.5                    % of authorised-twin episodes in which the gate asked the user at least once
+  [info] +4.1 [-2.1, 11.3]                                       change in benign utility vs no gate (points); noninferior at 10 points: True
+  [  ok] 7.7                      report 7.7                     reviewer gate (HIGH): ASR (%) over injected episodes (n=310)
+  [  ok] -18.7 [-25.1, -12.3]     report -18.7                   change in ASR vs no gate (points)
+  [  ok] 65.9                     report 65.9                    % of authorised-twin episodes in which the gate asked the user at least once
+  [  ok] -5.2 [-14.4, 4.1]        report -5.2 [-14.4, 4.1]       change in benign utility vs no gate (points); noninferior at 10 points: False
+  [  ok] 0.0                      report 0.0                     rule: confirm the 5 outbound functions: ASR (%) over injected episodes (n=309)
+  [  ok] -26.5 [-33.7, -18.9]     report -26.5                   change in ASR vs no gate (points)
+  [  ok] 78.2                     report 78.2                    % of authorised-twin episodes in which the gate asked the user at least once
+  [info] -1.0 [-8.2, 7.2]                                        change in benign utility vs no gate (points); noninferior at 10 points: True
+  [  ok] -7.8 [-10.9, -4.6]       report -7.8                    ASR under rule: confirm the 5 outbound functions minus under reviewer gate (HIGH) (points; the report says every 95% interval is below zero)
+  [  ok] -18.7 [-24.4, -12.9]     report -18.7                   ASR under reviewer gate (HIGH) minus under self-label gate (HIGH or missing) (points; the report says every 95% interval is below zero)
+-- Qwen3-32B
+  [  ok] [717]                    report [717]                   episode keys scheduled per gate
+  [info] [715, 715, 715, 716]                                    episodes without an exception: none / self-label / reviewer / rule
+  [  ok] 43.0                     report 43.0                    no gate: ASR (%) over injected episodes (n=309)
+  [  ok] 23.9                     report 23.9                    self-label gate (HIGH or missing): ASR (%) over injected episodes (n=309)
+  [  ok] -19.1 [-24.9, -13.1]     report -19.1                   change in ASR vs no gate (points)
+  [  ok] 47.6                     report 47.6                    % of authorised-twin episodes in which the gate asked the user at least once
+  [info] -1.0 [-5.2, 3.1]                                        change in benign utility vs no gate (points); noninferior at 10 points: True
+  [  ok] 4.5                      report 4.5                     reviewer gate (HIGH): ASR (%) over injected episodes (n=309)
+  [  ok] -38.5 [-45.4, -31.3]     report -38.5                   change in ASR vs no gate (points)
+  [  ok] 61.2                     report 61.2                    % of authorised-twin episodes in which the gate asked the user at least once
+  [info] -1.0 [-5.2, 2.1]                                        change in benign utility vs no gate (points); noninferior at 10 points: True
+  [  ok] 0.0                      report 0.0                     rule: confirm the 5 outbound functions: ASR (%) over injected episodes (n=309)
+  [  ok] -43.0 [-50.9, -34.8]     report -43.0                   change in ASR vs no gate (points)
+  [  ok] 90.0                     report 90.0                    % of authorised-twin episodes in which the gate asked the user at least once
+  [info] -1.0 [-3.1, 0.0]                                        change in benign utility vs no gate (points); noninferior at 10 points: True
+  [  ok] -4.5 [-6.7, -2.4]        report -4.5                    ASR under rule: confirm the 5 outbound functions minus under reviewer gate (HIGH) (points; the report says every 95% interval is below zero)
+  [  ok] -19.4 [-25.1, -13.9]     report -19.4                   ASR under reviewer gate (HIGH) minus under self-label gate (HIGH or missing) (points; the report says every 95% interval is below zero)
+-- Llama-3.3-70B
+  [  ok] [717]                    report [717]                   episode keys scheduled per gate
+  [info] [711, 711, 711, 711]                                    episodes without an exception: none / self-label / reviewer / rule
+  [  ok] 26.1                     report 26.1                    no gate: ASR (%) over injected episodes (n=307)
+  [  ok] 19.9                     report 19.9                    self-label gate (HIGH or missing): ASR (%) over injected episodes (n=306)
+  [  ok] -6.2 [-11.2, -1.1]       report -6.2                    change in ASR vs no gate (points)
+  [  ok] 11.9                     report 11.9                    % of authorised-twin episodes in which the gate asked the user at least once
+  [info] +3.2 [-2.1, 8.4]                                        change in benign utility vs no gate (points); noninferior at 10 points: True
+  [  ok] 7.5                      report 7.5                     reviewer gate (HIGH): ASR (%) over injected episodes (n=307)
+  [  ok] -18.6 [-25.6, -12.1]     report -18.6                   change in ASR vs no gate (points)
+  [  ok] 49.2                     report 49.2                    % of authorised-twin episodes in which the gate asked the user at least once
+  [info] +1.1 [-3.2, 6.3]                                        change in benign utility vs no gate (points); noninferior at 10 points: True
+  [  ok] 0.0                      report 0.0                     rule: confirm the 5 outbound functions: ASR (%) over injected episodes (n=306)
+  [  ok] -26.1 [-35.1, -17.3]     report -26.1                   change in ASR vs no gate (points)
+  [  ok] 52.6                     report 52.6                    % of authorised-twin episodes in which the gate asked the user at least once
+  [info] +2.1 [-2.1, 6.3]                                        change in benign utility vs no gate (points); noninferior at 10 points: True
+  [  ok] -7.5 [-12.5, -2.7]       report -7.5                    ASR under rule: confirm the 5 outbound functions minus under reviewer gate (HIGH) (points; the report says every 95% interval is below zero)
+  [  ok] -12.4 [-18.4, -7.0]      report -12.4                   ASR under reviewer gate (HIGH) minus under self-label gate (HIGH or missing) (points; the report says every 95% interval is below zero)
+  [  ok] [711, 716]               report [711, 716]              fewest and most episodes without an exception, over families and gates (of 717)
+
+======================================================================================================================
+Section 5 (text): executed gates with fallible LLM users (shown only the request and the proposed call)
+======================================================================================================================
+  [  ok] 37.9                     report 37.9                    Gemma-3-27B user: largest ASR reduction of any gate (Qwen3-32B, rule: confirm the 5 outbound functions) (points)
+  [  ok] 23                       report 23                      Gemma-3-27B user: largest fall in authorised completion (points; the report rounds to 23)
+  [  ok] 41.6                     report 41.6                    largest ASR reduction over all three fallible users (under Phi-4)
+  [  ok] 41.2                     report 41.2                    largest fall in authorised completion over all three fallible users (under Phi-4)
+  [  ok] True                     report True                    gpt-oss-120b self-label gate: the 95% interval of the ASR change includes zero for every fallible user
+  [  ok] 13                       report 13                      Gemma-3-27B approved at least this % of the attacker-directed calls the rule or reviewer showed it (report: 13-22)
+  [  ok] 22                       report 22                      ... and at most this %
+  [  ok] 11.5                     report 11.5                    Gemma-3-27B rejected at least this % of the other requests in authorised-twin episodes (any gate, any family)
+  [  ok] 40.5                     report 40.5                    ... and at most this %
+  [  ok] 11.7                     report 11.7                    Phi-4 answers that did not start with APPROVE or REJECT, over all its requests (counted as approvals)
+  [  ok] 4.4                      report 4.4                     extra reviewer inferences per legitimate episode under the reviewer gate, smallest over the 4 users x 3 families (the rule adds none)
+  [  ok] 7.3                      report 7.3                     ... largest
+
+======================================================================================================================
+Section 5 / Table 3 (middle) and text: gates compared at an equal interruption rate
+======================================================================================================================
+  [  ok] 4/0/0                    report 4/0/0                   gpt-oss-120b, self-label gate vs rule, benign workload, 4 users: rule more / gate more / no difference
+  [info] 14/0/2                                                  ... the same over all four ways of weighting legitimate tasks (16 comparisons)
+  [  ok] 4/0/0                    report 4/0/0                   Qwen3-32B, self-label gate vs rule, benign workload, 4 users: rule more / gate more / no difference
+  [info] 8/0/8                                                   ... the same over all four ways of weighting legitimate tasks (16 comparisons)
+  [  ok] 0/0/4                    report 0/0/4                   Llama-3.3-70B, self-label gate vs rule, benign workload, 4 users: rule more / gate more / no difference
+  [  ok] 0/0/16                   report 0/0/16                  ... the same over all four ways of weighting legitimate tasks (16 comparisons)
+  [  ok] 4/0/0                    report 4/0/0                   gpt-oss-120b, reviewer gate vs rule, benign workload, 4 users: rule more / gate more / no difference
+  [info] 12/0/4                                                  ... the same over all four ways of weighting legitimate tasks (16 comparisons)
+  [  ok] 0/0/4                    report 0/0/4                   Qwen3-32B, reviewer gate vs rule, benign workload, 4 users: rule more / gate more / no difference
+  [  ok] 0/12/4                   report 0/12/4                  ... the same over all four ways of weighting legitimate tasks (16 comparisons)
+  [  ok] 4/0/0                    report 4/0/0                   Llama-3.3-70B, reviewer gate vs rule, benign workload, 4 users: rule more / gate more / no difference
+  [info] 11/0/5                                                  ... the same over all four ways of weighting legitimate tasks (16 comparisons)
+  [  ok] -3.8 [-7.2, -0.5]        report -3.8                    Qwen3-32B, gemma_cautious: authorised completion of the reviewer minus the rule mixed down to its rate (points; X=out5, Y=l4)
+  [  ok] -10.4 [-14.5, -6.1]      report -10.4                   Qwen3-32B, phi4_standard: authorised completion of the reviewer minus the rule mixed down to its rate (points; X=out5, Y=l4)
+
+======================================================================================================================
+Summary
+======================================================================================================================
+  info: 22, n/a: 1, ok: 219
+  wrote data/headline.json
